@@ -1,0 +1,16 @@
+# Everything needed for development, including testing utilities and production requirements
+-r prod.txt
+
+# Testing
+pytest==3.7.4
+hypothesis==4.33.0
+
+# Linting
+black==19.3b0
+flake8==3.7.7
+flake8-blind-except==0.1.1
+flake8-debugger==3.1.0
+flake8-docstrings==1.3.0
+isort==4.3.4
+flake8-isort==2.5
+pep8-naming==0.7.0
