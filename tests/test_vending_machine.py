@@ -42,6 +42,34 @@ class BaseLogTestingMixin:
         logged_record = caplog.records[0]
         assert logged_record.levelname == levelname
 
+class TestViewPurchases(BaseLogTestingMixin):
+
+    def test_view_purchases_log(self, loaded_machine: VendingMachine, caplog):
+        """
+        Test case ensures that the correct number of messages get logged.
+        """
+
+        loaded_machine.purchase_item("A1")
+        loaded_machine.purchase_item("A1")
+
+        # Clearing messages emitted by purchasing the item
+        caplog.clear()
+
+        loaded_machine.view_purchases()
+        assert len(caplog.records) == 3
+        assert "You bought" in caplog.text
+
+    def test_view_purchases_logs_header_message(self, machine: VendingMachine, caplog):
+        """
+        Test case should ensure that a header message gets emitted, regardless
+        of whether there were purchases or not.
+        """
+
+        machine.view_purchases()
+        self.logs_one_message(caplog)
+        assert "You've spent 0 on 0 items." in caplog.text
+        assert "You bought" not in caplog.text
+
 
 class TestPurchaseItem(BaseLogTestingMixin):
     def test_out_of_stock_gets_logged_as_error(
