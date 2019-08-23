@@ -1,13 +1,13 @@
 from decimal import Decimal
 import string
-from typing import Tuple, Dict, Optional, List, Any
+from typing import Dict, Optional, List, Any
 from .item import Item
 from .purchase import Purchase
-from src import money
-from src.utils import position_from_coordinates
-from .exceptions import InvalidLocationError, InsufficientFundsError, OutOfStockError
-from src.ui.printer import fancy_print, formatted_print
-import decimal
+from vending_machine.utils import money
+from vending_machine.utils import position_from_coordinates
+from .exceptions import InsufficientFundsError, OutOfStockError
+from vending_machine.ui.printer import fancy_print, formatted_print
+
 
 LOG_ERROR = "error"
 LOG_SUCCESS = "success"
@@ -153,16 +153,17 @@ class VendingMachine:
         total_items_bought = len(self.purchases)
 
         header_message = "You've spent {} on {} items.".format(
-                total_amount_spent, total_items_bought)
+            total_amount_spent, total_items_bought
+        )
         if total_items_bought > 0:
             header_message += " You bought..."
 
         formatted_print(header_message)
         for indx, purchase in enumerate(self.purchases):
-            message = "{}: {} costs {}".format(indx, self.items[purchase.position], purchase.price)
+            message = "{}: {} costs {}".format(
+                indx, self.items[purchase.position], purchase.price
+            )
             formatted_print(message)
-
-
 
     def view_items(self, column: int = None, row: int = None) -> None:
         """
@@ -191,7 +192,9 @@ class VendingMachine:
 
         if row is not None:
             items = {
-                position: item for position, item in items.items() if str(row) in position
+                position: item
+                for position, item in items.items()
+                if str(row) in position
             }
 
         if column is not None:
@@ -201,11 +204,12 @@ class VendingMachine:
             }
 
         messages = [
-            "{}: {} costs {}, and there are {} units in stock.".format(position, item.name, item.price, item.remaining_stock)
+            "{}: {} costs {}, and there are {} units in stock.".format(
+                position, item.name, item.price, item.remaining_stock
+            )
             for position, item in sorted(items.items())
         ]
 
-        
         for message in messages:
             formatted_print(message)
 
@@ -239,7 +243,7 @@ class VendingMachine:
                 f"Purchased {item.name} for {item.price}. Your remaining balance is {self.balance}. Enjoy!",
             )
 
-    def deposit(self, deposit_amount: Decimal) -> Decimal:
+    def deposit(self, deposit_amount: Decimal) -> None:
         """
         Inserting money into the vending machine.
         :return: Current Balance

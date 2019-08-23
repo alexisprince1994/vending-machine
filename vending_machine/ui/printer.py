@@ -1,25 +1,25 @@
-from src.logger import GLOBAL_LOGGER as logger
+from vending_machine.utils import GLOBAL_LOGGER as logger
 
 # from src import logger
-import src.ui.colors
+import vending_machine.ui.colors
 
 import time
 
 USE_COLORS = True
-COLOR_FG_RED = src.ui.colors.COLORS["red"]
-COLOR_FG_GREEN = src.ui.colors.COLORS["green"]
-COLOR_FG_YELLOW = src.ui.colors.COLORS["yellow"]
-COLOR_RESET_ALL = src.ui.colors.COLORS["reset_all"]
+COLOR_FG_RED = vending_machine.ui.colors.COLORS["red"]
+COLOR_FG_GREEN = vending_machine.ui.colors.COLORS["green"]
+COLOR_FG_YELLOW = vending_machine.ui.colors.COLORS["yellow"]
+COLOR_RESET_ALL = vending_machine.ui.colors.COLORS["reset_all"]
 
 STATUSES = {"info": COLOR_FG_YELLOW, "success": COLOR_FG_GREEN, "error": COLOR_FG_RED}
 
 
 def fancy_print(status: str, message: str) -> None:
     """
-	Prints the message to stdout so the user
-	can have an interactive experience with
-	the vending machine in a consistent way.
-	"""
+    Prints the message to stdout so the user
+    can have an interactive experience with
+    the vending machine in a consistent way.
+    """
     if status not in STATUSES.keys():
         raise ValueError(
             "Unknown status, need one of {} and got {}".format(STATUSES.keys(), status)
@@ -28,7 +28,6 @@ def fancy_print(status: str, message: str) -> None:
     fancy_status = color(status.upper(), STATUSES[status])
     msg = "{}: {}".format(fancy_status, message)
     formatted_print(msg)
-    # logger.info("{} | {}: {}".format(get_timestamp(), fancy_status, message))
 
 
 def formatted_print(message: str) -> None:
