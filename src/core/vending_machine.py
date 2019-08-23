@@ -142,6 +142,28 @@ class VendingMachine:
 
         return cls(balance=Decimal(balance), items=items, purchases=purchases)
 
+    def view_purchases(self) -> None:
+        """
+        Lists out the purchases a user has made on this machine.
+        There should be one message per purchase, as well as one stating
+        how many purchases and how much money they spent.
+        """
+
+        total_amount_spent = sum((purchase.price for purchase in self.purchases))
+        total_items_bought = len(self.purchases)
+
+        header_message = "You've spent {} on {} items.".format(
+                total_amount_spent, total_items_bought)
+        if total_items_bought > 0:
+            header_message += " You bought..."
+
+        formatted_print(header_message)
+        for indx, purchase in enumerate(self.purchases):
+            message = "{}: {} costs {}".format(indx, self.items[purchase.position], purchase.price)
+            formatted_print(message)
+
+
+
     def view_items(self, column: int = None, row: int = None) -> None:
         """
         Top level function responsible for listing out the items

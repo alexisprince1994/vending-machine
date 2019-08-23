@@ -119,6 +119,21 @@ def view_balance():
 
     machine = VendingMachine.from_json(loaded)
     fancy_print(LOG_SUCCESS, f"Your current balance is {machine.balance}.")
+
+@cli.command()
+def view_purchases():
+    """
+    Views all purchases. If no machine exists, error is thrown.
+    """
+    if not os.path.isfile(STATE_FILE_LOCATION):
+        fancy_print(LOG_ERROR, "Please initialize the vending machine first.")
+        return None
+
+    with open(STATE_FILE_LOCATION) as f:
+        loaded = json.load(f)
+
+    machine = VendingMachine.from_json(loaded)
+    machine.view_purchases()
     
 
 @cli.command()
