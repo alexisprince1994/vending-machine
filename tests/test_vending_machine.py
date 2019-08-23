@@ -42,8 +42,8 @@ class BaseLogTestingMixin:
         logged_record = caplog.records[0]
         assert logged_record.levelname == levelname
 
-class TestViewPurchases(BaseLogTestingMixin):
 
+class TestViewPurchases(BaseLogTestingMixin):
     def test_view_purchases_log(self, loaded_machine: VendingMachine, caplog):
         """
         Test case ensures that the correct number of messages get logged.
@@ -299,8 +299,8 @@ class TestDispenseChange(BaseLogTestingMixin):
         assert change == money.add(deposit, deposit)
         assert machine.balance == Decimal(0)
 
-class TestViewItems(BaseLogTestingMixin):
 
+class TestViewItems(BaseLogTestingMixin):
     def test_invalid_position_logs_error(self, machine: VendingMachine, caplog):
         """
         Makes sure that if the user types in an invalid position, an error
@@ -312,7 +312,9 @@ class TestViewItems(BaseLogTestingMixin):
         assert "ERROR" in caplog.text
         assert "isn't a slot" in caplog.text
 
-    def test_specific_valid_position_logs_one_success(self, machine: VendingMachine, caplog):
+    def test_specific_valid_position_logs_one_success(
+        self, machine: VendingMachine, caplog
+    ):
         """
         Ensures that only one message gets logged
         """
@@ -368,5 +370,3 @@ def test_fill_machine_stops_filling_after_number_out_of_items():
     machine = VendingMachine(stock=num_items + 1)
 
     assert len(machine.items.keys()) == num_items
-
-

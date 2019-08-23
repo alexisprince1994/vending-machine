@@ -4,13 +4,9 @@ from vending_machine.ui.printer import fancy_print
 import json
 from vending_machine.utils import GLOBAL_LOGGER as logger
 from vending_machine.core.vending_machine import VendingMachine
-
+from . import STATE_FILE_LOCATION
 from decimal import Decimal
 
-
-HERE = os.path.abspath(os.path.dirname(__file__))
-PROJECT_ROOT = os.path.join(HERE, os.pardir)
-STATE_FILE_LOCATION = os.path.join(PROJECT_ROOT, "state.json")
 
 LOG_ERROR = "error"
 LOG_SUCCESS = "success"
@@ -67,10 +63,13 @@ def rebuild():
 
 @cli.command()
 @click.option(
-    "-c", "--column", "column", type=int, help="Inspects all items in the column"
+    "-c", "--column", "column", type=str, help="Inspects all items in the column"
 )
 @click.option("-r", "--row", "row", type=int, help="Inspects all items in the row")
-def view_items(column: int = None, row: int = None):
+@click.option(
+    "-p", "--position", type=str, help="View one specific item on the machine."
+)
+def view_items(column: str = None, row: int = None, position: str = None):
     """
     Viewing what items are in the machine. Filters are additive.
     """
@@ -83,7 +82,10 @@ def view_items(column: int = None, row: int = None):
         loaded = json.load(f)
 
     machine = VendingMachine.from_json(loaded)
-    machine.view_items(column, row)
+    if position:
+        machine.view_items(position[0], position[1])
+    else:
+        machine.view_items(column, row)
 
 
 @cli.command()

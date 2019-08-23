@@ -16,8 +16,8 @@ def test_to_money_rounds_to_2_decimal_places(input_val, output):
 
 def test_add_2_args():
     """
-	Adding 2 decimals and ensuring the result rounds correctly
-	"""
+    Adding 2 decimals and ensuring the result rounds correctly
+    """
 
     dec1 = Decimal("5.5")
     dec2 = Decimal("5.5")
