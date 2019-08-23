@@ -1,10 +1,12 @@
-import click
-from src.ui.printer import fancy_print
-import json
-from src.logger import GLOBAL_LOGGER as logger
-from src.core.vending_machine import VendingMachine
 import os
+import click
+from vending_machine.ui.printer import fancy_print
+import json
+from vending_machine.utils import GLOBAL_LOGGER as logger
+from vending_machine.core.vending_machine import VendingMachine
+
 from decimal import Decimal
+
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.join(HERE, os.pardir)
@@ -85,7 +87,7 @@ def view_items(column: int = None, row: int = None):
 
 
 @cli.command()
-@click.argument('amount', type=float)
+@click.argument("amount", type=float)
 def add_money(amount: float):
     """
     Adding money to the existing vending machine. If no machine exists, error is thrown.
@@ -101,8 +103,9 @@ def add_money(amount: float):
     machine = VendingMachine.from_json(loaded)
     machine.deposit(Decimal(amount))
 
-    with open(STATE_FILE_LOCATION, 'w') as f:
+    with open(STATE_FILE_LOCATION, "w") as f:
         json.dump(machine.to_json(), f)
+
 
 @cli.command()
 def view_balance():
@@ -120,6 +123,7 @@ def view_balance():
     machine = VendingMachine.from_json(loaded)
     fancy_print(LOG_SUCCESS, f"Your current balance is {machine.balance}.")
 
+
 @cli.command()
 def view_purchases():
     """
@@ -134,7 +138,7 @@ def view_purchases():
 
     machine = VendingMachine.from_json(loaded)
     machine.view_purchases()
-    
+
 
 @cli.command()
 def dispense_change():
@@ -152,8 +156,9 @@ def dispense_change():
     machine = VendingMachine.from_json(loaded)
     machine.dispense_change()
 
-    with open(STATE_FILE_LOCATION, 'w') as f:
+    with open(STATE_FILE_LOCATION, "w") as f:
         json.dump(machine.to_json(), f)
+
 
 if __name__ == "__main__":
     cli()

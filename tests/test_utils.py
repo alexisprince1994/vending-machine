@@ -1,4 +1,4 @@
-from src.utils import position_from_coordinates, coordinates_from_position
+from vending_machine.utils import position_from_coordinates, coordinates_from_position
 from hypothesis import given
 import hypothesis.strategies as st
 import pytest

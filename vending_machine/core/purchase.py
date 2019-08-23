@@ -1,15 +1,13 @@
-from src.ui.printer import fancy_print
-from src.utils import position_from_coordinates
-from typing import Dict
+from typing import Dict, Any
 from decimal import Decimal
 
 
 class Purchase:
     """
-	Thin wrapper class around a basic dictionary to allow
-	the "purchase" event to be JSON serializable,
-	while being clearer than just using a dictionary
-	"""
+    Thin wrapper class around a basic dictionary to allow
+    the "purchase" event to be JSON serializable,
+    while being clearer than just using a dictionary
+    """
 
     def __init__(self, position: str, price: Decimal):
         self.position = position
@@ -20,7 +18,7 @@ class Purchase:
             return self.position == other.position and self.price == other.price
         return False
 
-    def to_json(self) -> Dict[str, int]:
+    def to_json(self) -> Dict[str, Any]:
 
         return {"position": self.position, "price": str(self.price)}
 

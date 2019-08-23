@@ -9,4 +9,4 @@ run:
 	docker run -it --rm vending-machine
 
 test:
-	docker run --rm vending-machine-test python src/commands.py
+	docker run --rm vending-machine-test python -m pytest

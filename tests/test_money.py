@@ -1,5 +1,5 @@
 from decimal import Decimal
-from src.money import to_money, add, subtract
+from vending_machine.utils import to_money, add, subtract
 import pytest
 
 

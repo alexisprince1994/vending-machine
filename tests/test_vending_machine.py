@@ -1,8 +1,8 @@
 from decimal import Decimal
-from src.core.exceptions import InsufficientFundsError, OutOfStockError
-from src.core.item import Item
-from src.core.vending_machine import VendingMachine
-from src import money
+from vending_machine.core.exceptions import InsufficientFundsError, OutOfStockError
+from vending_machine.core.item import Item
+from vending_machine.core.vending_machine import VendingMachine
+from vending_machine.utils import money
 
 from hypothesis import given
 import hypothesis.strategies as st

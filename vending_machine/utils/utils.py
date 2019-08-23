@@ -6,10 +6,10 @@ def position_from_coordinates(column: int, row: int) -> Tuple[str, int]:
     """
     Converts from a row and column number to a position tuple.
     """
-    
+
     letter = string.ascii_uppercase[column - 1]
 
-    return (letter, row)
+    return letter, row
 
 
 def coordinates_from_position(position: Tuple[str, int]) -> Tuple[int, int]:

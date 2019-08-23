@@ -1,8 +1,7 @@
 """ CLI Utility Commands """
 
 import os
-from glob import glob
-import subprocess
+
 
 import click
 

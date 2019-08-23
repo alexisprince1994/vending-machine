@@ -1,8 +1,7 @@
 from decimal import Decimal
-from typing import Tuple, Dict, Any
+from typing import Dict, Any
 from .exceptions import InsufficientFundsError, OutOfStockError
-from src.ui.printer import fancy_print
-from src import money
+
 
 # import money
 
