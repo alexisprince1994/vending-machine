@@ -165,7 +165,7 @@ class VendingMachine:
             )
             formatted_print(message)
 
-    def view_items(self, column: int = None, row: int = None) -> None:
+    def view_items(self, column: str = None, row: int = None) -> None:
         """
         Top level function responsible for listing out the items
         in the vending machine.
@@ -173,17 +173,10 @@ class VendingMachine:
         for the subset specified.
         """
 
-        if column is not None:
-            try:
-                letter, _ = position_from_coordinates(column, 1)
-            except IndexError:
-                fancy_print(LOG_ERROR, f"{letter}{row} isn't a slot on this machine.")
-                return None
-
         if column is not None and row is not None:
-            letter, row = position_from_coordinates(column, row)
-            if f"{letter}{row}" not in self.items:
-                fancy_print(LOG_ERROR, f"{letter}{row} isn't a slot on this machine.")
+            # letter, row = position_from_coordinates(column, row)
+            if f"{column}{row}" not in self.items:
+                fancy_print(LOG_ERROR, f"{column}{row} isn't a slot on this machine.")
                 return None
 
         # Not planning on modifying underlying items, but better
@@ -200,7 +193,7 @@ class VendingMachine:
         if column is not None:
 
             items = {
-                position: item for position, item in items.items() if letter in position
+                position: item for position, item in items.items() if column in position
             }
 
         messages = [
