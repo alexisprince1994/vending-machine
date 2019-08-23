@@ -51,10 +51,7 @@ class TestPositionFromCoordinates:
 
         column_out, row = coordinates_from_position((letter, row))
 
-    @given(
-        column=st.integers(min_value=27),
-        row=st.integers(min_value=1, max_value=26),
-    )
+    @given(column=st.integers(min_value=27), row=st.integers(min_value=1, max_value=26))
     def test_position_from_coordinates_raises_indexerror(self, column: int, row: int):
         """
         Ensures that any column value larger than 26 (larger than string.ascii_uppercase)
