@@ -12,8 +12,8 @@ LOG_SUCCESS = "success"
 class Item:
 
     """
-	An item that exists within the vending machine.
-	"""
+    An item that exists within the vending machine.
+    """
 
     def __init__(self, name: str, price: Decimal, remaining_stock: int):
         self.name = name
@@ -46,8 +46,8 @@ class Item:
     @classmethod
     def from_json(cls, dumped: Dict[str, Any]):
         """
-		Loads the item from a dictionary. Inverse of to_json.
-		"""
+        Loads the item from a dictionary. Inverse of to_json.
+        """
 
         return cls(
             name=dumped["name"],
@@ -57,9 +57,9 @@ class Item:
 
     def to_json(self) -> Dict[str, Any]:
         """
-		Dumps the item to a serializable dictionary that
-		is reloadable using the from_json constructor
-		"""
+        Dumps the item to a serializable dictionary that
+        is reloadable using the from_json constructor
+        """
 
         return {
             "name": self.name,
@@ -69,10 +69,10 @@ class Item:
 
     def purchase(self, balance: Decimal) -> Decimal:
         """
-		Purchases an item from the vending machine. Raises InsufficientFunds
-		exception if balance < price of the item.
-		:return: Money left from the completed transaction
-		"""
+        Purchases an item from the vending machine. Raises InsufficientFunds
+        exception if balance < price of the item.
+        :return: Money left from the completed transaction
+        """
 
         if self.remaining_stock <= 0:
             # Don't need to put a message as that's handle by the

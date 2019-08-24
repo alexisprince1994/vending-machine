@@ -1,25 +1,25 @@
-from click.testing import CliRunner
-import pytest
 import os
+
+import pytest
+from click.testing import CliRunner
+
 from vending_machine import STATE_FILE_LOCATION
 from vending_machine.__main__ import (
     start,
     destroy,
     view_items,
     view_balance,
-    view_purchases,
     add_money,
     dispense_change,
 )
 
 
-class BaseHasExitCode0:
-
-    pass
-
-
 @pytest.fixture
 def reset_state():
+    """
+    Fixture that ensures a state file is deleted before
+    and after every run, to make sure that tests run in isolation.
+    """
 
     if os.path.isfile(STATE_FILE_LOCATION):
         os.remove(STATE_FILE_LOCATION)
@@ -32,11 +32,16 @@ def reset_state():
 
 @pytest.fixture
 def runner():
+    """
+    Instantiates the click testing runner
+    """
 
     return CliRunner()
 
 
-def test_start_creates_statefile(runner, reset_state, caplog):
+def test_start_creates_state_file(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Test case ensuring the start command will create a new json state
     file if one doesn't exist yet.
@@ -48,7 +53,9 @@ def test_start_creates_statefile(runner, reset_state, caplog):
     assert os.path.isfile(STATE_FILE_LOCATION)
 
 
-def test_start_does_nothing_if_existing(runner, reset_state, caplog):
+def test_start_does_nothing_if_existing(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Test case ensuring that start has "create if not exists" style
     behavior.
@@ -66,7 +73,9 @@ def test_start_does_nothing_if_existing(runner, reset_state, caplog):
     assert os.path.isfile(STATE_FILE_LOCATION)
 
 
-def test_destroy_destroys_statefile(runner, reset_state, caplog):
+def test_destroy_destroys_state_file(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Test case ensuring that the destroy command will destroy an
     existing state file (if it exists).
@@ -81,7 +90,9 @@ def test_destroy_destroys_statefile(runner, reset_state, caplog):
     assert not os.path.isfile(STATE_FILE_LOCATION)
 
 
-def test_destroy_does_nothing_if_no_statefile(runner, reset_state, caplog):
+def test_destroy_does_nothing_without_state_file(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Tests to make sure that the destroy command
     can run without the program erroring out, even if
@@ -95,7 +106,9 @@ def test_destroy_does_nothing_if_no_statefile(runner, reset_state, caplog):
     assert "doing nothing" in caplog.text.lower()
 
 
-def test_view_items_prints_messages_from_row_and_column(runner, reset_state, caplog):
+def test_view_items_prints_messages_from_row_and_column(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Tests to make sure the view items command prints out the
     correct number of messages to the console if given
@@ -110,7 +123,9 @@ def test_view_items_prints_messages_from_row_and_column(runner, reset_state, cap
     assert result.exit_code == 0
 
 
-def test_view_items_prints_messages_from_position(runner, reset_state, caplog):
+def test_view_items_prints_messages_from_position(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Tests to make sure the view items command prints out the
     correct number of messages to the console if given
@@ -125,7 +140,9 @@ def test_view_items_prints_messages_from_position(runner, reset_state, caplog):
     assert result.exit_code == 0
 
 
-def test_deposit_money(runner, reset_state, caplog):
+def test_deposit_money(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Test case ensures you're able to deposit money via CLI
     """
@@ -141,7 +158,9 @@ def test_deposit_money(runner, reset_state, caplog):
     assert "10" in caplog.text
 
 
-def test_view_balance(runner, reset_state, caplog):
+def test_view_balance(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Test case ensures that the sum of money deposited
     is viewable.
@@ -157,7 +176,9 @@ def test_view_balance(runner, reset_state, caplog):
     assert "10" in caplog.text
 
 
-def test_dispense_change(runner, reset_state, caplog):
+def test_dispense_change(
+    runner, reset_state, caplog
+):  # pylint: disable=redefined-outer-name,unused-argument,invalid-name
     """
     Test case ensures that you're able to get change
     from the machine and it resets the balance to 0

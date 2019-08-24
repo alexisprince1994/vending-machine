@@ -19,10 +19,21 @@ class Purchase:
         return False
 
     def to_json(self) -> Dict[str, Any]:
+        """
+        Dumps the purchase object to a json serializable dictionary
+        that can be converted back into a Purchase object via
+        Purchase.from_json(purchase.to_json())
+        :return:
+        """
 
         return {"position": self.position, "price": str(self.price)}
 
     @classmethod
     def from_json(cls, dumped: Dict[str, str]):
+        """
+        Loads the purchase object from a json serializable dictionary
+        that could have been generated from a Purchase object via
+        purchase.to_json()
+        """
 
         return cls(dumped["position"], Decimal(dumped["price"]))

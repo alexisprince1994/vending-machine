@@ -1,12 +1,19 @@
-import os
-import click
-from vending_machine.ui.printer import fancy_print
+"""
+Top level CLI script that allows the vending_machine
+module to actually be executed. Most code here
+is very basic, with a lot of the heavy lifting
+being done by vending_machine/core
+"""
+
 import json
-from vending_machine.utils import GLOBAL_LOGGER as logger
-from vending_machine.core.vending_machine import VendingMachine
-from . import STATE_FILE_LOCATION
+import os
 from decimal import Decimal
 
+import click
+
+from vending_machine.core.vending_machine import VendingMachine
+from vending_machine.ui.printer import fancy_print
+from . import STATE_FILE_LOCATION
 
 LOG_ERROR = "error"
 LOG_SUCCESS = "success"
@@ -33,10 +40,12 @@ def start():
         return None
 
     machine = VendingMachine()
-    with open(STATE_FILE_LOCATION, "w") as f:
-        json.dump(machine.to_json(), f)
+    with open(STATE_FILE_LOCATION, "w") as file:
+        json.dump(machine.to_json(), file)
 
     fancy_print(LOG_SUCCESS, "Vending machine created.")
+
+    return None
 
 
 @cli.command()
@@ -78,14 +87,16 @@ def view_items(column: str = None, row: int = None, position: str = None):
         fancy_print(LOG_ERROR, "Please initialize the vending machine first.")
         return None
 
-    with open(STATE_FILE_LOCATION) as f:
-        loaded = json.load(f)
+    with open(STATE_FILE_LOCATION) as file:
+        loaded = json.load(file)
 
     machine = VendingMachine.from_json(loaded)
     if position:
         machine.view_items(position[0], position[1])
     else:
         machine.view_items(column, row)
+
+    return None
 
 
 @cli.command()
@@ -99,14 +110,16 @@ def add_money(amount: float):
         fancy_print(LOG_ERROR, "Please initialize the vending machine first.")
         return None
 
-    with open(STATE_FILE_LOCATION) as f:
-        loaded = json.load(f)
+    with open(STATE_FILE_LOCATION) as file:
+        loaded = json.load(file)
 
     machine = VendingMachine.from_json(loaded)
     machine.deposit(Decimal(amount))
 
-    with open(STATE_FILE_LOCATION, "w") as f:
-        json.dump(machine.to_json(), f)
+    with open(STATE_FILE_LOCATION, "w") as file:
+        json.dump(machine.to_json(), file)
+
+    return None
 
 
 @cli.command()
@@ -119,11 +132,13 @@ def view_balance():
         fancy_print(LOG_ERROR, "Please initialize the vending machine first.")
         return None
 
-    with open(STATE_FILE_LOCATION) as f:
-        loaded = json.load(f)
+    with open(STATE_FILE_LOCATION) as file:
+        loaded = json.load(file)
 
     machine = VendingMachine.from_json(loaded)
     fancy_print(LOG_SUCCESS, f"Your current balance is {machine.balance}.")
+
+    return None
 
 
 @cli.command()
@@ -135,11 +150,13 @@ def view_purchases():
         fancy_print(LOG_ERROR, "Please initialize the vending machine first.")
         return None
 
-    with open(STATE_FILE_LOCATION) as f:
-        loaded = json.load(f)
+    with open(STATE_FILE_LOCATION) as file:
+        loaded = json.load(file)
 
     machine = VendingMachine.from_json(loaded)
     machine.view_purchases()
+
+    return None
 
 
 @cli.command()
@@ -152,14 +169,16 @@ def dispense_change():
         fancy_print(LOG_ERROR, "Please initialize the vending machine first.")
         return None
 
-    with open(STATE_FILE_LOCATION) as f:
-        loaded = json.load(f)
+    with open(STATE_FILE_LOCATION) as file:
+        loaded = json.load(file)
 
     machine = VendingMachine.from_json(loaded)
     machine.dispense_change()
 
-    with open(STATE_FILE_LOCATION, "w") as f:
-        json.dump(machine.to_json(), f)
+    with open(STATE_FILE_LOCATION, "w") as file:
+        json.dump(machine.to_json(), file)
+
+    return None
 
 
 if __name__ == "__main__":
