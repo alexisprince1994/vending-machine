@@ -1,13 +1,12 @@
-from decimal import Decimal
 import string
+from decimal import Decimal
 from typing import Dict, Optional, List, Any
+
+from vending_machine.ui.printer import fancy_print, formatted_print
+from vending_machine.utils import money
+from .exceptions import InsufficientFundsError, OutOfStockError
 from .item import Item
 from .purchase import Purchase
-from vending_machine.utils import money
-from vending_machine.utils import position_from_coordinates
-from .exceptions import InsufficientFundsError, OutOfStockError
-from vending_machine.ui.printer import fancy_print, formatted_print
-
 
 LOG_ERROR = "error"
 LOG_SUCCESS = "success"
@@ -83,7 +82,7 @@ class VendingMachine:
 
                 try:
                     item_dict = vending_machine_items[item_number]
-                except IndexError as e:
+                except IndexError:
                     print(
                         f"Not enough predetermined vending machine items. Qutting at {item_number}"
                     )
