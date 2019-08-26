@@ -62,7 +62,10 @@ class VendingMachine:
 
     @staticmethod
     def create_initial_machine(
-        vending_machine_items: Dict[str, Any], rows: int, columns: int, stock: int = 3
+        vending_machine_items: List[Dict[str, Any]],
+        rows: int,
+        columns: int,
+        stock: int = 3,
     ) -> Dict[str, Item]:
         """
         Initializing the machine's state full of vending
