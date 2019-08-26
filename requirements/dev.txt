@@ -5,6 +5,8 @@
 pytest==3.7.4
 hypothesis==4.33.0
 
-# Linting
+
+# Linting & Code Checking
 black==19.3b0
 isort==4.3.4
+pre-commit==1.18.2
